@@ -14,6 +14,13 @@ namespace hello_world_api
     {
         public static void Main(string[] args)
         {
+            var dir = Directory.GetCurrentDirectory();
+            while (dir != null && Directory.GetFiles(dir, "*.sln").Length == 0)
+                dir = Directory.GetParent(dir)?.FullName;
+
+            var outputPath = Path.Combine(dir ?? Directory.GetCurrentDirectory(), "helloworld.txt");
+            File.WriteAllText(outputPath, "Hello world!");
+
             BuildWebHost(args).Run();
         }
 
